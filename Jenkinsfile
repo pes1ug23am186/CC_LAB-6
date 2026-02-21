@@ -36,12 +36,8 @@ pipeline {
                   --name nginx-lb \
                   --network app-network \
                   -p 80:80 \
+                  -v $(pwd)/nginx/default.conf:/etc/nginx/conf.d/default.conf \
                   nginx
-
-                sleep 2
-
-                docker cp nginx/default.conf nginx-lb:/etc/nginx/conf.d/default.conf
-                docker exec nginx-lb nginx -s reload
                 '''
             }
         }
