@@ -27,20 +27,20 @@ pipeline {
             }
         }
 
-        stage('Deploy NGINX Load Balancer') {
-            steps {
-                sh '''
-                docker rm -f nginx-lb || true
+stage('Deploy NGINX Load Balancer') {
+    steps {
+        sh '''
+        docker rm -f nginx-lb || true
 
-                docker run -d \
-                  --name nginx-lb \
-                  --network app-network \
-                  -p 80:80 \
-                  -v $(pwd)/nginx/default.conf:/etc/nginx/conf.d/default.conf \
-                  nginx
-                '''
-            }
-        }
+        docker run -d \
+          --name nginx-lb \
+          --network app-network \
+          -p 80:80 \
+          -v $(pwd)/nginx:/etc/nginx/conf.d \
+          nginx
+        '''
+    }
+}
     }
 
     post {
